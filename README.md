@@ -33,10 +33,10 @@ clipno ships a [skill](skills/clipno/SKILL.md) so Claude can save and extract li
 
 ```bash
 # 1. skills CLI
-npx skills add <github-owner>/clipno-cli
+npx skills add EwingYangs/clipno-cli
 
 # 2. Claude Code plugin marketplace
-/plugin marketplace add <github-owner>/clipno-cli
+/plugin marketplace add EwingYangs/clipno-cli
 
 # 3. Manual
 cp -r skills/clipno ~/.claude/skills/

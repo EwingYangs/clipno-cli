@@ -8,6 +8,9 @@
   "bin": { "clipno": "dist/index.js" },
   "files": ["dist", "README.md"],
   "engines": { "node": ">=18" },
+  "homepage": "https://clipno.app",
+  "repository": { "type": "git", "url": "git+https://github.com/EwingYangs/clipno-cli.git" },
+  "bugs": { "url": "https://github.com/EwingYangs/clipno-cli/issues" },
   "scripts": {
     "build": "tsup",
     "test": "vitest run --passWithNoTests",
