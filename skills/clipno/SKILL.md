@@ -1,6 +1,6 @@
 ---
 name: clipno
-description: Save any link to Notion, or extract any URL into structured data (title, author, tags, markdown), via the clipno CLI. Use when the user wants to save/clip/bookmark a link to Notion, or parse/extract a URL's content. Triggers: "save to notion", "clip this link", "save this link", "存到 Notion", "剪藏这个链接", "保存到 Notion", "解析这个链接".
+description: Save any link to Notion, or extract any URL into structured data (title, author, tags, markdown), via the clipno CLI. Use when the user wants to save, clip, or bookmark a link to Notion, or parse or extract a URL's content. Trigger phrases include save to notion, clip this link, save this link, 存到 Notion, 剪藏这个链接, 保存到 Notion, 解析这个链接.
 ---
 
 # clipno — Save links to Notion, extract URLs as data
