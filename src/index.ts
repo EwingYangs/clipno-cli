@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander'
 import { registerExtract } from './commands/extract.js'
+import { registerSave } from './commands/save.js'
 
 const program = new Command()
 
@@ -10,6 +11,7 @@ program
   .version('0.1.0')
 
 registerExtract(program)
+registerSave(program)
 
 export default program
 
