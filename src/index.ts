@@ -3,6 +3,7 @@ import { Command } from 'commander'
 import { registerExtract } from './commands/extract.js'
 import { registerSave } from './commands/save.js'
 import { registerSession } from './commands/session.js'
+import { registerLogin } from './commands/login.js'
 
 const program = new Command()
 
@@ -14,6 +15,7 @@ program
 registerExtract(program)
 registerSave(program)
 registerSession(program)
+registerLogin(program)
 
 export default program
 
