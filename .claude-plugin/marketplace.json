@@ -1,0 +1,11 @@
+{
+  "name": "clipno",
+  "owner": { "name": "clipno" },
+  "plugins": [
+    {
+      "name": "clipno",
+      "source": "./",
+      "description": "Save any link to Notion or extract any URL into structured data"
+    }
+  ]
+}
