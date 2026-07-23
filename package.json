@@ -1,6 +1,6 @@
 {
   "name": "clipno",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Save any link to Notion from your terminal. Extract any URL into structured data.",
   "keywords": ["notion", "clipper", "cli", "bookmark", "web-clipper"],
   "license": "MIT",

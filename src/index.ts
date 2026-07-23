@@ -10,7 +10,7 @@ const program = new Command()
 program
   .name('clipno')
   .description('Save any link to Notion. Extract any URL into structured data.\nhttps://clipno.app')
-  .version('0.1.0')
+  .version('0.1.1')
 
 registerExtract(program)
 registerSave(program)

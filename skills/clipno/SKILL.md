@@ -20,6 +20,8 @@ clipno save <url> --json
 Optional flags: `--tags "a,b"`, `--note "..."`, `--title "..."`.
 Parse the JSON output and give the user the `pageUrl` (their new Notion page) and `title`. On quota errors, relay the API message (free plan: 50 saves/month).
 
+**If save fails because Notion is not connected** (error message mentions "Notion not connected" or the JSON `code` is `AUTH_MISSING` / `AUTH_INVALID`): the user has not linked a Notion workspace yet, or their Notion authorization expired. STOP and tell them to connect Notion at **https://clipno.app/dashboard/notion**, then run the save again. Do not attempt to authorize Notion for them — it is an OAuth flow they must complete in the browser. `extract` does not need Notion, so it still works in this state.
+
 ## Extract a URL as structured data
 
 ```bash

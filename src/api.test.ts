@@ -47,4 +47,18 @@ describe('apiFetch', () => {
     const { apiFetch } = await import('./api.js')
     await expect(apiFetch('/api/save')).rejects.toThrow(/50 saves\/month/)
   })
+
+  it('maps AUTH_MISSING (Notion not connected) to the connect-Notion hint', async () => {
+    mockFetch(400, { error: 'Notion not connected. Please authorize Notion first.', message: 'Notion not connected. Please authorize Notion first.', code: 'AUTH_MISSING' })
+    const { apiFetch } = await import('./api.js')
+    await expect(apiFetch('/api/save', { method: 'POST', body: { url: 'https://a.com' } }))
+      .rejects.toThrow(/clipno\.app\/dashboard\/notion/)
+  })
+
+  it('maps AUTH_INVALID (stale Notion token) to the connect-Notion hint', async () => {
+    mockFetch(500, { error: 'Failed to retrieve Notion token', message: 'Failed to retrieve Notion token', code: 'AUTH_INVALID' })
+    const { apiFetch } = await import('./api.js')
+    await expect(apiFetch('/api/save', { method: 'POST', body: { url: 'https://a.com' } }))
+      .rejects.toThrow(/clipno\.app\/dashboard\/notion/)
+  })
 })

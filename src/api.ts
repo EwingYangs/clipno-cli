@@ -46,6 +46,15 @@ export async function apiFetch<T>(
         code,
       )
     }
+    if (code === 'AUTH_MISSING' || code === 'AUTH_INVALID') {
+      // Notion isn't connected (or the stored Notion token is invalid). The API
+      // message doesn't carry the connect URL, so point the user at it here.
+      throw new ApiError(
+        `${message}\nConnect Notion at https://clipno.app/dashboard/notion, then run this again.`,
+        res.status,
+        code,
+      )
+    }
     throw new ApiError(message, res.status, code)
   }
 
