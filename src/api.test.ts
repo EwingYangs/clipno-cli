@@ -41,4 +41,10 @@ describe('apiFetch', () => {
     const { apiFetch } = await import('./api.js')
     await expect(apiFetch('/api/save')).rejects.toThrow(/50 saves\/month/)
   })
+
+  it('maps 403 without a code field (sync save quota shape) to upgrade hint', async () => {
+    mockFetch(403, { error: 'Monthly limit reached', message: 'Monthly limit reached', remaining: 0, is_vip: false })
+    const { apiFetch } = await import('./api.js')
+    await expect(apiFetch('/api/save')).rejects.toThrow(/50 saves\/month/)
+  })
 })

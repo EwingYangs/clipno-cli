@@ -36,7 +36,10 @@ export async function apiFetch<T>(
     if (res.status === 401) {
       throw new ApiError(`${message}\nRun \`clipno login\` to re-authenticate.`, 401, code)
     }
-    if (res.status === 403 && code === 'QUOTA_EXCEEDED') {
+    if (res.status === 403) {
+      // All 403s from this API are quota/limit related (e.g. QUOTA_EXCEEDED on the
+      // async path, or the sync save path's bare `{ error, message, remaining, is_vip }`
+      // shape with no `code` field). Always append the upgrade hint.
       throw new ApiError(
         `${message}\nFree plan includes 50 saves/month. Upgrade: https://clipno.app/#pricing`,
         403,

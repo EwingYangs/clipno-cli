@@ -21,6 +21,13 @@ export default program
 
 program.parseAsync().catch((err: unknown) => {
   const message = err instanceof Error ? err.message : String(err)
-  process.stderr.write(`Error: ${message}\n`)
+
+  if (process.argv.includes('--json')) {
+    const code = typeof (err as { code?: unknown })?.code === 'string' ? (err as { code: string }).code : undefined
+    process.stderr.write(`${JSON.stringify({ error: message, message, ...(code ? { code } : {}) })}\n`)
+  } else {
+    process.stderr.write(`Error: ${message}\n`)
+  }
+
   process.exit(1)
 })
