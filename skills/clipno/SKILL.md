@@ -18,6 +18,13 @@ clipno save <url> --json
 ```
 
 Optional flags: `--tags "a,b"`, `--note "..."`, `--title "..."`.
+
+Enrichment flags (only pass them when the user asks; omitting them keeps the user's own account settings):
+- `--transcribe` / `--no-transcribe` — add (or skip) a transcript for video/audio links. Omitted: follows account setting.
+- `--ocr` / `--no-ocr` — extract (or skip) text from a post's images. Omitted: follows account setting.
+- `--summarize` / `--no-summarize` — add (or skip) an AI summary. Omitted: no summary.
+
+Enrichment can appear on the Notion page shortly after `save` returns, and is skipped silently when the user's monthly enrichment or AI quota is used up — the link itself is still saved.
 Parse the JSON output and give the user the `pageUrl` (their new Notion page) and `title`. On quota errors, relay the API message (free plan: 50 saves/month).
 
 **If save fails because Notion is not connected** (error message mentions "Notion not connected" or the JSON `code` is `AUTH_MISSING` / `AUTH_INVALID`): the user has not linked a Notion workspace yet, or their Notion authorization expired. STOP and tell them to connect Notion at **https://clipno.app/dashboard/notion**, then run the save again. Do not attempt to authorize Notion for them — it is an OAuth flow they must complete in the browser. `extract` does not need Notion, so it still works in this state.

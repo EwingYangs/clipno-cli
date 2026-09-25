@@ -22,10 +22,26 @@ clipno save <url>         # save a link to your Notion database
 | `clipno login` | Authorize this machine via browser | `--token <token>` — paste a token instead of opening a browser |
 | `clipno logout` | Delete the locally stored token | — |
 | `clipno whoami` | Verify the stored token against the clipno API | — |
-| `clipno save <url>` | Save a link to your Notion database | `--tags "a,b"`, `--note "..."`, `--title "..."`, `--json` (raw API response) |
+| `clipno save <url>` | Save a link to your Notion database | `--tags "a,b"`, `--note "..."`, `--title "..."`, `--transcribe` / `--ocr` / `--summarize` (see below), `--json` (raw API response) |
 | `clipno extract <url>` | Extract a URL into structured data (JSON by default) | `--markdown` (content markdown only) |
 
 `clipno extract` runs specialized extractors for X/Twitter, WeChat, YouTube, Reddit, GitHub, and LinkedIn; other URLs go through a generic extraction pipeline. Output includes title, author, tags, publish date, content markdown, images, and video where available.
+
+### Transcripts, image text, and AI summaries
+
+`clipno save` can enrich the Notion page while saving:
+
+| Flag | What it does | When omitted |
+| --- | --- | --- |
+| `--transcribe` / `--no-transcribe` | Add a transcript for video/audio links | Follows your account setting |
+| `--ocr` / `--no-ocr` | Extract text from the images of a post | Follows your account setting |
+| `--summarize` / `--no-summarize` | Add an AI summary | Off |
+
+The account settings are the same switches you set in the clipno browser extension or app. Enrichment may land on the page a little after `save` returns. Transcripts/image text and AI summaries each have a monthly quota; when one runs out, the link is still saved without that part.
+
+```bash
+clipno save https://youtu.be/xxxx --transcribe --summarize
+```
 
 ## Use it as a Claude Code skill
 
@@ -63,7 +79,7 @@ Tokens can be revoked at any time from the [dashboard](https://clipno.app/dashbo
 ## Links
 
 - [clipno.app](https://clipno.app)
-- Free plan: 50 saves/month
+- Free plan: 50 saves/month, 3 transcripts or image-text extractions/month, 10 AI summaries/month
 
 ## License
 

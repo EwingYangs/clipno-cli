@@ -9,14 +9,26 @@ export interface SaveResponse {
   title?: string
 }
 
-export function buildSaveBody(
-  url: string,
-  opts: { tags?: string; note?: string; title?: string },
-): Record<string, unknown> {
+export interface SaveOptions {
+  tags?: string
+  note?: string
+  title?: string
+  /** Enrichment switches: undefined = not specified, fall back to account settings on the server. */
+  transcribe?: boolean
+  ocr?: boolean
+  summarize?: boolean
+}
+
+export function buildSaveBody(url: string, opts: SaveOptions): Record<string, unknown> {
   const body: Record<string, unknown> = { url }
   if (opts.tags) body.tags = opts.tags.split(',').map((t) => t.trim()).filter(Boolean)
   if (opts.note) body.note = opts.note
   if (opts.title) body.title = opts.title
+  // Only send switches the user set explicitly. Omitted transcribe/extractImageText fall back
+  // to account settings on the server; omitted summarize means no summary.
+  if (typeof opts.transcribe === 'boolean') body.transcribe = opts.transcribe
+  if (typeof opts.ocr === 'boolean') body.extractImageText = opts.ocr
+  if (typeof opts.summarize === 'boolean') body.summarize = opts.summarize
   return body
 }
 
@@ -34,8 +46,14 @@ export function registerSave(program: Command): void {
     .option('--tags <tags>', 'comma-separated tags')
     .option('--note <note>', 'note to attach')
     .option('--title <title>', 'override the page title')
+    .option('--transcribe', 'transcribe video/audio (default: your account setting)')
+    .option('--no-transcribe', 'skip transcription')
+    .option('--ocr', 'extract text from images (default: your account setting)')
+    .option('--no-ocr', 'skip image text extraction')
+    .option('--summarize', 'add an AI summary (default: off)')
+    .option('--no-summarize', 'skip the AI summary')
     .option('--json', 'output the raw API response as JSON')
-    .action(async (url: string, opts: { tags?: string; note?: string; title?: string; json?: boolean }) => {
+    .action(async (url: string, opts: SaveOptions & { json?: boolean }) => {
       const res = await apiFetch<SaveResponse>('/api/save', {
         method: 'POST',
         body: buildSaveBody(url, opts),

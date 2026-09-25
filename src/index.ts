@@ -1,16 +1,20 @@
 #!/usr/bin/env node
+import { createRequire } from 'node:module'
 import { Command } from 'commander'
 import { registerExtract } from './commands/extract.js'
 import { registerSave } from './commands/save.js'
 import { registerSession } from './commands/session.js'
 import { registerLogin } from './commands/login.js'
 
+// dist/index.js and src/index.ts both sit one level below package.json (shipped via `files`).
+const { version } = createRequire(import.meta.url)('../package.json') as { version: string }
+
 const program = new Command()
 
 program
   .name('clipno')
   .description('Save any link to Notion. Extract any URL into structured data.\nhttps://clipno.app')
-  .version('0.1.1')
+  .version(version)
 
 registerExtract(program)
 registerSave(program)
